@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }
@@ -29,5 +33,25 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.mapHolder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  height: 50%;
+  margin: 0 auto;
+  animation: mapAnimate 0.5s ease-in-out forwards;
+}
+
+@keyframes mapAnimate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
