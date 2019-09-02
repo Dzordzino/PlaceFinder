@@ -6,67 +6,50 @@ class SearchComponent extends Component {
     this.state = props.data;
   }
 
-  componentDidMount = () => {
-    let that = this;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        // Typical action to be performed when the document is ready:
-        let placesArray = JSON.parse(xhttp.responseText).places;
-        that.setState({ places: placesArray });
-      }
-    };
-    xhttp.open("GET", "http://127.0.0.1:3000/placesJson.JSON", true);
-    xhttp.send();
-  };
-
-  singleItemClick() {
-    console.log("e");
-  }
-
   changeInput(e) {
     document.getElementById("result").innerHTML = "";
-    let autocompleteInputValue = e.currentTarget.value,
-      places = this.state.places,
-      reg = new RegExp(
-        autocompleteInputValue
-          .split("")
-          .join("\\w*")
-          .replace(/\W/, ""),
-        "i"
-      );
-    let fulteredResults = places.filter(function(person) {
-      if (person.match(reg)) {
-        return person;
-      }
-    });
-    fulteredResults.forEach(item => {
-      document.getElementById(
-        "result"
-      ).innerHTML += `<li onClick=${this.singleItemClick} >${item}</li>`;
-    });
-  }
+    if(e.currentTarget.value !== ""){
+      let autocompleteInputValue = e.currentTarget.value,
+          places = this.props.data.placeTypes,
+          reg = new RegExp(
+            autocompleteInputValue
+              .split("")
+              .join("\\w*")
+              .replace(/\W/, ""),
+            "i"
+          ),
+          fulteredResults = places.filter(person => person.match(reg));
+
+      fulteredResults.forEach(item => {
+        let li = document.createElement("LI");
+
+        li.innerHTML = item.split("_").join(" ");
+        li.setAttribute("data-id", item);
+        li.addEventListener("click", this.props.singleItemClick.bind(this));
+        document.querySelector("#result").appendChild(li);
+      });
+    }
+  };
 
   render() {
-    const { changeRadius, showMap } = this.props;
+    const { changeRadius, showMapButton } = this.props;
 
     return (
       <Fragment>
-        <input type='text' onKeyUp={this.changeInput.bind(this)} />
+        <input className='js-autocompleteInput autocompleteInput' type='text' onKeyUp={this.changeInput.bind(this)} placeholder="Enter place type" />
         <ul id='result'></ul>
-        <button type='button' onClick={showMap}>
-          Search
-        </button>
         <input
           type='range'
-          min='0'
+          min='1000'
           step='1000'
           max='10000'
-          className='js-rangeInput'
-          onChange={changeRadius}></input>
+          className='js-rangeInput rangeInput'
+          onChange={changeRadius}/>
+        <p className="rangeText">Current range <span className="js-rangeText">1000</span></p>
+        <button className="searchButton" type='button' onClick={showMapButton}>Search</button>
       </Fragment>
     );
-  }
-}
+  };
+};
 
 export default SearchComponent;

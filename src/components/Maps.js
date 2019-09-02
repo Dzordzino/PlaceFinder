@@ -7,7 +7,7 @@ class Maps extends Component {
     this.state = props.data;
   }
 
-  componentDidMount = () => {
+  componentDidMount(){
     navigator.geolocation.getCurrentPosition(
       position => {
         const latitude = position.coords.latitude;
@@ -17,17 +17,9 @@ class Maps extends Component {
       },
       error => alert(error.message)
     );
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        // Typical action to be performed when the document is ready:
-        console.log(JSON.parse(xhttp.responseText));
-      }
-    };
-    xhttp.open("GET", "http://127.0.0.1:3000/placesJson.JSON", true);
-    xhttp.send();
   };
+
+
 
   displayMarkers = () => {
     if (this.state.places.length > 0) {
@@ -35,12 +27,12 @@ class Maps extends Component {
         return (
           <Marker
             key={index}
-            id={index}
+            id={place.id}
             position={{
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng(),
             }}
-            onClick={() => console.log("You clicked me!")}
+            onClick={this.props.showInfo.bind(this)}
           />
         );
       });
@@ -53,16 +45,16 @@ class Maps extends Component {
     const request = {
       location: map.getCenter(),
       radius: this.state.radius,
-      type: ["restaurant"],
+      type: [this.state.placeType]
     };
 
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        const places = results;
-        this.setState({ places });
+        this.setState({ places: results});
+        this.props.stateUpdate(results);
       }
     });
-  }
+  };
 
   render() {
     const { latitude, longitude, locationDetected } = this.state;
@@ -72,7 +64,7 @@ class Maps extends Component {
         {locationDetected ? (
           <Map
             google={this.props.google}
-            zoom={13}
+            zoom={14}
             initialCenter={{ lat: latitude, lng: longitude }}
             onReady={this.fetchPlaces.bind(this)}>
             {this.displayMarkers()}
@@ -82,8 +74,8 @@ class Maps extends Component {
         )}
       </Fragment>
     );
-  }
-}
+  };
+};
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyCfzWY9B6LyhQJ-bVi2BWitjePhWPeWkpY",
