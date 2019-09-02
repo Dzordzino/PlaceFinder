@@ -19,7 +19,6 @@ class SearchComponent extends Component {
             "i"
           ),
           fulteredResults = places.filter(person => person.match(reg));
-
       fulteredResults.forEach(item => {
         let li = document.createElement("LI");
 
@@ -28,6 +27,12 @@ class SearchComponent extends Component {
         li.addEventListener("click", this.props.singleItemClick.bind(this));
         document.querySelector("#result").appendChild(li);
       });
+      if(fulteredResults.length === 0){
+        let li = document.createElement("LI");
+
+        li.innerHTML = "Please try with diferent word";
+        document.querySelector("#result").appendChild(li);
+      }
     }
   };
 
@@ -45,7 +50,7 @@ class SearchComponent extends Component {
           max='10000'
           className='js-rangeInput rangeInput'
           onChange={changeRadius}/>
-        <p className="rangeText">Current range <span className="js-rangeText">1000</span></p>
+        <p className="rangeText">Current range <span className="js-rangeText">1000</span>m</p>
         <button className="searchButton" type='button' onClick={showMapButton}>Search</button>
       </Fragment>
     );
