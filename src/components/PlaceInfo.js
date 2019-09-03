@@ -3,20 +3,6 @@ import React, { Component, Fragment } from 'react'
 import List from "./List";
 
 class PlaceInfo extends Component {
-
-    renderList(places, showInfo){
-        let m = document.querySelector(".js-placesList");
-        if(m !== null){
-            m.innerHTML = "";
-            places.forEach(item => {
-                let li = document.createElement("LI");
-                li.innerHTML = item.name.split("_").join(" ");
-                li.setAttribute("data-id", item.id);
-                li.addEventListener("click", showInfo);
-                document.querySelector(".js-placesList").appendChild(li);
-            });
-        }   
-    };
     
     render() {
         const { showPlaceInfo, selectedPlace, showList, data, showInfo } = this.props;
@@ -44,7 +30,7 @@ class PlaceInfo extends Component {
                 ) : (
                     <Fragment>
                         { data.places ? (
-                            <List data={data.places} showInfo={(e) => showInfo(e)} />
+                            <List data={data.places} showInfo={showInfo} />
                             ):(
                                 ""
                             )

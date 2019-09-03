@@ -21,6 +21,7 @@ class App extends Component {
   };
 
   componentDidMount(){
+    console.log()
     let that = this;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -29,7 +30,7 @@ class App extends Component {
         that.setState({ placeTypes: placesArray });
       }
     };
-    xhttp.open("GET", "http://127.0.0.1:3000/placesJson.JSON", true);
+    xhttp.open("GET", `${window.location.href}/placesJson.JSON`, true);
     xhttp.send();
   };
 
@@ -88,14 +89,14 @@ class App extends Component {
                 data={this.state}
                 showPlaceInfo={showPlaceInfo} 
                 selectedPlace={selectedPlace}
-                showList={this.showList.bind(this)}
-                showInfo={this.showInfo.bind(this)}/>
+                showList={() => this.showList()}
+                showInfo={(e) => this.showInfo(e)}/>
             </div>
             <div className='mapHolder'>
               <Maps
                 data={this.state} 
-                showInfo={this.showInfo.bind(this)}
-                stateUpdate={this.stateUpdate.bind(this)} 
+                showInfo={(e) => this.showInfo(e)}
+                stateUpdate={(array) => this.stateUpdate(array)} 
               />
             </div>
           </div>
@@ -104,9 +105,9 @@ class App extends Component {
           <h1>Find places near you</h1>
           <SearchComponent
             data={this.state}
-            showMapButton={this.showMapButton.bind(this)}
-            changeRadius={this.changeRadius.bind(this)}
-            singleItemClick={this.singleItemClick.bind(this)}
+            showMapButton={() => this.showMapButton()}
+            changeRadius={(e) => this.changeRadius(e)}
+            singleItemClick={(e) => this.singleItemClick(e)}
           />
           </Fragment>
         )}

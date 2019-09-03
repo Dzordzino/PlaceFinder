@@ -32,7 +32,7 @@ class Maps extends Component {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng(),
             }}
-            onClick={this.props.showInfo.bind(this)}
+            onClick={this.props.showInfo}
           />
         );
       });
@@ -66,7 +66,7 @@ class Maps extends Component {
             google={this.props.google}
             zoom={14}
             initialCenter={{ lat: latitude, lng: longitude }}
-            onReady={this.fetchPlaces.bind(this)}>
+            onReady={(mapProps, map) => this.fetchPlaces(mapProps, map)}>
             {this.displayMarkers()}
           </Map>
         ) : (
