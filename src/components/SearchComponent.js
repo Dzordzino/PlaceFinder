@@ -1,10 +1,6 @@
 import React, { Component, Fragment } from "react";
 
 class SearchComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props.data;
-  }
 
   changeInput(e) {
     document.getElementById("result").innerHTML = "";

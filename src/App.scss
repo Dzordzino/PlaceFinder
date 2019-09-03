@@ -10,6 +10,19 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0;
+
+  .linkHolder {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: .5rem 1rem;
+    background: #fff;
+    border-top-left-radius: 3rem;
+    img{
+      margin-left: 0.5rem;
+      width: 40px;
+    }
+  }
 }
 
 #result{
