@@ -21,7 +21,6 @@ class App extends Component {
   };
 
   componentDidMount(){
-    console.log()
     let that = this;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
