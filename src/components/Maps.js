@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
 class Maps extends Component {
@@ -75,6 +76,12 @@ class Maps extends Component {
       </Fragment>
     );
   };
+};
+
+Maps.propTypes = {
+    locationDetected: PropTypes.bool,
+    latitude: PropTypes.number,
+    longitude: PropTypes.number
 };
 
 export default GoogleApiWrapper({

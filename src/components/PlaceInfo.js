@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from "prop-types";
 
 import List from "./List";
 
@@ -30,10 +31,21 @@ const PlaceInfo = ({ showPlaceInfo, selectedPlace, showList, data, showInfo }) =
                     ):(
                         ""
                     )
-                }    
+                }
             </Fragment>
         )}
     </Fragment>
 );
+
+PlaceInfo.propTypes = {
+    showPlaceInfo: PropTypes.bool.isRequired,
+    selectedPlace: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object
+      ]),
+    showList: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired,
+    showInfo: PropTypes.func.isRequired
+};
 
 export default PlaceInfo;

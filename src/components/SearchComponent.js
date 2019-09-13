@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
 class SearchComponent extends Component {
 
@@ -16,7 +17,7 @@ class SearchComponent extends Component {
             "i"
           ),
           fulteredResults = places.filter(person => person.match(reg));
-          
+
       fulteredResults.forEach(item => {
         let li = document.createElement("LI");
 
@@ -54,6 +55,11 @@ class SearchComponent extends Component {
       </Fragment>
     );
   };
+};
+
+SearchComponent.propTypes = {
+    changeRadius: PropTypes.func.isRequired,
+    showMapButton: PropTypes.func.isRequired
 };
 
 export default SearchComponent;

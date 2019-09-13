@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
 import "../App.scss";
 
@@ -70,7 +71,7 @@ class App extends Component {
   singleItemClick(e) {
     let itemValue = e.currentTarget.getAttribute("data-id"),
         itemText = e.currentTarget.innerHTML;
-    
+
     document.querySelector(".js-autocompleteInput").value = itemText;
     document.getElementById("result").innerHTML = "";
     this.setState({ placeType: itemValue});
@@ -83,20 +84,20 @@ class App extends Component {
       <div className={showMap ? "App large" : "App"}>
         {showMap ? (
           <div className='infoHolder'>
+            <div className='mapHolder'>
+              <Maps
+                data={this.state}
+                showInfo={(e) => this.showInfo(e)}
+                stateUpdate={(array) => this.stateUpdate(array)}
+              />
+            </div>
             <div className='infoWindow'>
               <PlaceInfo
                 data={this.state}
-                showPlaceInfo={showPlaceInfo} 
+                showPlaceInfo={showPlaceInfo}
                 selectedPlace={selectedPlace}
                 showList={() => this.showList()}
                 showInfo={(e) => this.showInfo(e)}/>
-            </div>
-            <div className='mapHolder'>
-              <Maps
-                data={this.state} 
-                showInfo={(e) => this.showInfo(e)}
-                stateUpdate={(array) => this.stateUpdate(array)} 
-              />
             </div>
           </div>
         ) : (
@@ -113,6 +114,12 @@ class App extends Component {
       </div>
     );
   };
+};
+
+App.propTypes = {
+    showMap: PropTypes.bool,
+    showPlaceInfo: PropTypes.bool,
+    selectedPlace: PropTypes.array
 };
 
 export default App;
